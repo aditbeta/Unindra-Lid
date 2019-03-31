@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Input Data Karyawan</title>
+
+		<!-- Font Awesome Icons -->
+		<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+		<!-- Plugin CSS -->
+		<link href="../vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+		<!-- Theme CSS - Includes Bootstrap -->
+		<link href="../css/creative.min.css" rel="stylesheet">
+
+		</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <div class="container">
+		    <a class="navbar-brand" href="#">Sistem Inventoris</a>
+		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+
+		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		      <ul class="navbar-nav ml-auto">
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="inputDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Input</a>
+		          <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
+		          <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="inputDropdown">
+		            <a class="dropdown-item" href="input_karyawan.html">Karyawan</a>
+		            <a class="dropdown-item" href="input_barang.html">Barang</a>
+		          </div>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="laporanDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Laporan</a>
+		          <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
+		          <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="laporanDropdown">
+		            <a class="dropdown-item" href="laporan_karyawan.html">Karyawan</a>
+		            <a class="dropdown-item" href="laporan_barang.html">Barang</a>
+		          </div>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../index.html" id="keluar" role="button">Keluar</a>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+
+		<section class="page-section" id="main">
+		    <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-9 col-lg-8 mx-auto">
+                  <h3 class="login-heading mb-4">Input Data Karyawan</h3>
+                  <form class="form-horizontal">
+                    <div class="form-group row">
+                      <label for="kode" class="col-sm-4 control-label">Kode Karyawan</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7">
+	                      <input type="text" id="kode" class="form-control" required autofocus>
+	                  </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="nama" class="col-sm-4 control-label">Nama</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7">
+	                      <input type="text" id="nama" class="form-control" required autofocus>
+	                  </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="kelamin" class="col-sm-4 control-label">Jenis Kelamin</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7 row">
+                      	<div class="col-sm-6">
+						  <input type="radio" checked="checked" name="kelamin"> Pria</div>
+						<div class="col-sm-6">
+						  <input type="radio" name="kelamin"> Wanita</div>
+	                  </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="ttl" class="col-sm-4 control-label">Tempat/Tgl Lahir</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7">
+	                      <input type="text" id="ttl" class="form-control" required autofocus>
+	                  </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="alamat" class="col-sm-4 control-label">Alamat</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7">
+                      	<textarea id="alamat" class="form-control" rows="5"  style="overflow:scroll;" required autofocus></textarea>
+	                  </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="telp" class="col-sm-4 control-label">No Telp</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7">
+	                      <input type="text" id="telp" class="form-control" required autofocus>
+	                  </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label for="telp" class="col-sm-4 control-label">Jabatan</label>
+                      <div class="col-sm-1">:</div>
+                      <div class="col-sm-7">
+                      	<select class="form-control">
+						  <option value="" disabled selected>Pilihan</option>
+						  <option value="manager">Manager</option>
+						  <option value="staff">Staff</option>
+						</select>
+	                  </div>
+                    </div>
+
+					<br><hr>
+                    <button onclick="simpan_karyawan()" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">SIMPAN</button>
+                  </form>
+                </div>
+              </div>
+		    </div>
+		  </section>
+
+		  <!-- Footer -->
+		  <footer class="bg-light py-5">
+		    <div class="container">
+		      <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
+		    </div>
+		  </footer>
+
+		  <!-- Bootstrap core JavaScript -->
+		  <script src="../vendor/jquery/jquery.min.js"></script>
+		  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		  <!-- Plugin JavaScript -->
+		  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+		  <script src="../vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+		  <!-- Custom scripts for this template -->
+		  <script src="../js/creative.min.js"></script>
+
+		  <script type="text/javascript">
+		    function simpan_karyawan() {
+		      window.location.replace("laporan_karyawan.html");
+		    }
+		  </script>
+
+	</body>
+</html>
