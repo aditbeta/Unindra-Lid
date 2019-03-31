@@ -1,2 +1,2 @@
-# smt6
+# Unindra Lid
 Tugas Lidya Semester 6
