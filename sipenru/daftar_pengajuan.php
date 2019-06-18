@@ -256,9 +256,9 @@
                   <?php
                   include 'db_connection.php';
                   $conn = connectDB();
-                  $id = 1;
+                  $id = 2;
 
-                  $sql = "SELECT * FROM PenggunaanRuangan WHERE id=".$id." ORDER BY tanggal_pengajuan ASC";
+                  $sql = "SELECT * FROM PenggunaanRuangan WHERE id_user=".$id." ORDER BY tanggal_pengajuan ASC";
                   $result = $conn->query($sql);
 
                   if ($result->num_rows > 0) {
@@ -288,6 +288,7 @@
 
                             $pengajuan .= $row["id"]."</td><td>"
                             .$rowRuangan["kode"]."</td><td>"
+                            .$rowKetersediaan["tanggal"]."</td><td>"
                             .$rowKetersediaan["jam_mulai"]." - ".$rowKetersediaan["jam_selesai"]."</td><td>"
                             .$row["keterangan"]."</td><td>"
                             .$row["tanggal_pengajuan"]."</td><td>"

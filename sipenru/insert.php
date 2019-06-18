@@ -47,7 +47,46 @@
     }
 
     function tambahPenggunaan($conn) {
-        echo "Hello world!";
+        $id_ketersediaan = $_POST['id_ketersediaan'];
+        $id_user = $_POST['id_user'];
+        $tanggal_pengajuan = gmdate('Y-m-d h:i:s');
+        $keterangan = $_POST['keterangan'];
+        $sql = "INSERT INTO PenggunaanRuangan (id_ketersediaan, id_user, tanggal_pengajuan, keterangan, status) VALUES ('".$id_ketersediaan."', '".$id_user."', '".$tanggal_pengajuan."', '".$keterangan."', 0);";
+
+        if ($conn->multi_query($sql) === TRUE) {
+            echo mysqli_insert_id($conn);
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
+    }
+
+    function prosesPengajuan($conn) {
+        $id_penggunaan = $_POST['id_penggunaan'];
+        $id_ketersediaan = $_POST['id_ketersediaan'];
+        $proses = $_POST['proses'];
+
+        if ($proses == 1) {
+            $sql = "UPDATE PenggunaanRuangan SET status=1 WHERE id='".$id_penggunaan."';";
+            if ($conn->multi_query($sql) === TRUE) {
+                $sql = "UPDATE KetersediaanRuangan SET status=1 WHERE id='".$id_ketersediaan."';";
+                if ($conn->multi_query($sql) === TRUE) {
+                    echo $id_penggunaan;
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        } else {
+            $sql = "UPDATE PenggunaanRuangan SET status=2 WHERE id='".$id_penggunaan."';";
+            if ($conn->multi_query($sql) === TRUE) {
+                echo $id_penggunaan;
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        }
     }
 
 
@@ -70,6 +109,10 @@
         
         case 'penggunaan':
             tambahPenggunaan($conn);
+            break;
+        
+        case 'proses':
+            prosesPengajuan($conn);
             break;
         
         default:

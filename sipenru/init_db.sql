@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Ruangan (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- status: 0 = tersedia; 1 = diajukan; 2 = diterima; 3 = ditolak
+-- status: 0 = tersedia; 1 = digunakan
 CREATE TABLE IF NOT EXISTS KetersediaanRuangan (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	kode_ruangan VARCHAR(20) NOT NULL,
@@ -38,12 +38,14 @@ CREATE TABLE IF NOT EXISTS KetersediaanRuangan (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+-- status: 0 = menunggu; 1 = diterima, 2 = ditolak
 CREATE TABLE IF NOT EXISTS PenggunaanRuangan (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	id_ketersediaan INT(20) UNSIGNED NOT NULL,
 	id_user INT(20) UNSIGNED NOT NULL,
 	tanggal_pengajuan DATETIME NOT NULL,
 	keterangan VARCHAR(144),
+	status INT(20),
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_ketersediaan) REFERENCES KetersediaanRuangan(id),
 	FOREIGN KEY (id_user) REFERENCES User(id)

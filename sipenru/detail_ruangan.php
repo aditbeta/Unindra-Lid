@@ -368,8 +368,8 @@
 
     $("#tambah-ketersediaan").click(function () {
       var tds = "<tr><td><input class='form-control' type='date' id='tanggal' onchange='ketersediaanChange()' required></td>";
-      tds += "<td><input class='form-control' type='text' id='jam_mulai' onchange='ketersediaanChange()' required></td>";
-      tds += "<td><input class='form-control' type='text' id='jam_selesai' onchange='ketersediaanChange()' required></td>";
+      tds += "<td><input placeholder='hh:mm:ss' class='form-control' type='text' id='jam_mulai' onchange='ketersediaanChange()' required></td>";
+      tds += "<td><input placeholder='hh:mm:ss' class='form-control' type='text' id='jam_selesai' onchange='ketersediaanChange()' required></td>";
       tds += "<td>Tersedia</td></tr>";
       $("#dataTable > tbody:last-child").append(tds);
       $("#tambah-ketersediaan").hide();

@@ -258,31 +258,35 @@
                   include 'db_connection.php';
                   $conn = connectDB();
 
-                  $sql = "SELECT * FROM KetersediaanRuangan WHERE status=2 OR status=3";
-                  $resultKetersediaan = $conn->query($sql);
+                  $sql = "SELECT * FROM PenggunaanRuangan WHERE status>0";
+                  $resultPenggunaan = $conn->query($sql);
 
-                  if ($resultKetersediaan->num_rows > 0) {
-                    while($rowKetersediaan = $resultKetersediaan->fetch_assoc()) {
+                  if ($resultPenggunaan->num_rows > 0) {
+                    while($rowPenggunaan = $resultPenggunaan->fetch_assoc()) {
+                      $sql = "SELECT * FROM KetersediaanRuangan WHERE id='".$rowPenggunaan["id_ketersediaan"]."'";
+                      $resultKetersediaan = $conn->query($sql);
+                      $rowKetersediaan = $resultKetersediaan->fetch_assoc();
+
                       $sql = "SELECT * FROM Ruangan WHERE kode='".$rowKetersediaan["kode_ruangan"]."'";
                       $resultRuangan = $conn->query($sql);
                       $rowRuangan = $resultRuangan->fetch_assoc();
                       $ruangan = $rowRuangan["nama"]." [".$rowRuangan["kode"]."]";
-
-                      $sql = "SELECT * FROM PenggunaanRuangan WHERE id_ketersediaan='".$rowKetersediaan["id"]."'";
-                      $resultPenggunaan = $conn->query($sql);
-                      $rowPenggunaan = $resultPenggunaan->fetch_assoc();
 
                       $sql = "SELECT * FROM User WHERE id='".$rowPenggunaan["id_user"]."'";
                       $resultUser = $conn->query($sql);
                       $rowUser = $resultUser->fetch_assoc();
 
                       $waktu = $rowKetersediaan["tanggal"]." | ".$rowKetersediaan["jam_mulai"]."-".$rowKetersediaan["jam_selesai"];
-                      $status = $rowKetersediaan["status"] == 2 ? "OK" : "X";
+                      if ($rowPenggunaan["status"] == 1) {
+                        $status = "<button class='btn btn-success' disabled>Diterima</button>";
+                      } else {
+                        $status = "<button class='btn btn-danger' disabled>Ditolak</button>";
+                      }
 
                       echo "<tr><td>".$rowKetersediaan["id"]."</td><td>".$ruangan."</td><td>".$waktu."</td><td>".$rowUser["nama"]."</td><td>".$rowPenggunaan["tanggal_pengajuan"]."</td><td>".$rowPenggunaan["keterangan"]."</td><td>".$status."</td></tr>";
                     }
                   } else {
-                    echo "<tr><td>- Tidak ada pengajuan terproses -</td></tr>";
+                    echo "<tr><td colspan='7' align='center'>- Tidak ada pengajuan terproses -</td></tr>";
                   }
 
                   closeDB($conn);

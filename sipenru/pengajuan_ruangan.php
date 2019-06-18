@@ -258,19 +258,19 @@
                   include 'db_connection.php';
                   $conn = connectDB();
 
-                  $sql = "SELECT * FROM KetersediaanRuangan WHERE status=1";
-                  $resultKetersediaan = $conn->query($sql);
+                  $sql = "SELECT * FROM PenggunaanRuangan WHERE status=0";
+                  $resultPenggunaan = $conn->query($sql);
 
-                  if ($resultKetersediaan->num_rows > 0) {
-                    while($rowKetersediaan = $resultKetersediaan->fetch_assoc()) {
+                  if ($resultPenggunaan->num_rows > 0) {
+                    while($rowPenggunaan = $resultPenggunaan->fetch_assoc()) {
+                      $sql = "SELECT * FROM KetersediaanRuangan WHERE id='".$rowPenggunaan["id_ketersediaan"]."'";
+                      $resultKetersediaan = $conn->query($sql);
+                      $rowKetersediaan = $resultKetersediaan->fetch_assoc();
+
                       $sql = "SELECT * FROM Ruangan WHERE kode='".$rowKetersediaan["kode_ruangan"]."'";
                       $resultRuangan = $conn->query($sql);
                       $rowRuangan = $resultRuangan->fetch_assoc();
                       $ruangan = $rowRuangan["nama"]." [".$rowRuangan["kode"]."]";
-
-                      $sql = "SELECT * FROM PenggunaanRuangan WHERE id_ketersediaan='".$rowKetersediaan["id"]."'";
-                      $resultPenggunaan = $conn->query($sql);
-                      $rowPenggunaan = $resultPenggunaan->fetch_assoc();
 
                       $sql = "SELECT * FROM User WHERE id='".$rowPenggunaan["id_user"]."'";
                       $resultUser = $conn->query($sql);
@@ -279,7 +279,12 @@
                       $waktu = $rowKetersediaan["tanggal"]." | ".$rowKetersediaan["jam_mulai"]."-".$rowKetersediaan["jam_selesai"];
                       $status = $rowKetersediaan["status"] == 2 ? "OK" : "X";
 
-                      echo "<tr><td>".$rowKetersediaan["id"]."</td><td>".$ruangan."</td><td>".$waktu."</td><td>".$rowUser["nama"]."</td><td>".$rowPenggunaan["tanggal_pengajuan"]."</td><td>".$rowPenggunaan["keterangan"]."</td><td>".$status."</td></tr>";
+                      $idData = $rowPenggunaan["id"] . "," . $rowPenggunaan["id_ketersediaan"];
+
+                      $terimaPengajuan = "<a href='#' class='btn btn-success btn-icon-split' onclick='prosesPengajuan(\"".$idData."\", 1)'><span class='icon text-white-50'><i class='fas fa-check'></i></span><span class='text'>Terima</span></a>";
+                      $tolakPengajuan = "<a href='#' class='btn btn-danger btn-icon-split' onclick='prosesPengajuan(\"".$idData."\", 2)'><span class='icon text-white-50'><i class='fas fa-times'></i></span><span class='text'>Tolak</span></a>";
+
+                      echo "<tr><td>".$rowKetersediaan["id"]."</td><td>".$ruangan."</td><td>".$waktu."</td><td>".$rowUser["nama"]."</td><td>".$rowPenggunaan["tanggal_pengajuan"]."</td><td>".$rowPenggunaan["keterangan"]."</td><td>".$tolakPengajuan." ".$terimaPengajuan."</td></tr>";
                     }
                   } else {
                     echo "<tr><td>- Tidak ada pengajuan terproses -</td></tr>";
@@ -347,6 +352,27 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <script>
+    function prosesPengajuan(data, proses){
+      // alert(data);
+      var id_penggunaan = data.split(",")[0];
+      var id_ketersediaan = data.split(",")[1];
+      $.ajax({
+         type: "POST",
+         url: 'insert.php',
+         data:{ action:'proses', id_penggunaan: id_penggunaan, id_ketersediaan: id_ketersediaan, proses: proses },
+         success:function(data) {
+           if (proses == 1) {
+            alert("Berhasil menerima pengajuan dengan nomor: " + data);
+           } else {
+            alert("Berhasil menolak pengajuan dengan nomor: " + data);
+           }
+           location.reload()
+         }
+      });
+    }
+  </script>
 
 </body>
 

@@ -259,7 +259,7 @@
               </div>
               <div class="form-group" id="divKeterangan">
               </div>
-              <button type="submit" class="btn btn-primary" id="simpan" disabled>Simpan</button>
+              <a href='#' class='btn btn-primary' id="simpan" onclick="simpanPengajuan()">Simpan</a>
             </form>
           </div>
 
@@ -345,7 +345,22 @@
 
       document.getElementById("divKeterangan").innerHTML =
         "<label for='keterangan'>Keterangan</label>" +
-        "<input class='form-control' type='text' name='keterangan'>"
+        "<input class='form-control' type='text' name='keterangan' id='keterangan'>"
+    }
+
+    function simpanPengajuan(){
+      var id_ketersediaan = document.getElementById("jam").value;
+      var id_user = 2;
+      var keterangan = document.getElementById("keterangan").value;
+      $.ajax({
+         type: "POST",
+         url: 'insert.php',
+         data:{ action:'penggunaan', id_ketersediaan: id_ketersediaan, id_user: id_user, keterangan: keterangan },
+         success:function(data) {
+           alert("Berhasil mengajukan penggunaan ruangan. Nomor pengajuan: " + data);
+           window.location.href = "daftar_pengajuan.php";
+         }
+      });
     }
   </script>
 
