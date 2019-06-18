@@ -14,7 +14,7 @@
     $result = $conn->query($sql);
 
     echo "<label for='jam'>Jam</label>";
-    echo "<select class='form-control' id='jam' onchange='jamChange(this.value)'>>";
+    echo "<select class='form-control' id='jam'>";
 
     $pilihanJam = "";
     if ($result->num_rows > 0) {
