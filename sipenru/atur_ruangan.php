@@ -227,6 +227,10 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Daftar Ruangan Kampus Gedong</h1>
 
+          <div class="card-body" align="right">
+              <a href='tambah_ruangan.php' class='btn btn-success btn-icon-split'><span class='icon text-white-50'><i class='fas fa-plus'></i></span><span class='text'>Tambah Ruangan</span></a>
+          </div>
+
           <!-- Table data ruangan -->
           <div class="card-body">
             <div class="table-responsive">
@@ -258,18 +262,18 @@
                   if ($result->num_rows > 0) {
                       // output data of each row
                       while($row = $result->fetch_assoc()) {
-                        $lihatJam = "<a href='#' class='btn btn-success btn-icon-split'><span class='icon text-white-50'><i class='fas fa-clock'></i></span><span class='text'>Lihat Jam</span></a> ";
+                        $lihatJam = "<a href='#' class='btn btn-warning btn-icon-split'><span class='icon text-white-50'><i class='fas fa-clock'></i></span><span class='text'>Lihat Jam</span></a>";
                         $detailRuangan = "<a href='detail_ruangan.php?id_ruangan=".$row["id"]."' class='btn btn-info btn-icon-split'><span class='icon text-white-50'><i class='fas fa-info-circle'></i></span><span class='text'>Detail</span></a>";
                         echo "<tr><td>".$row["id"]."</td><td>".$row["kode"]."</td><td>".$row["nama"]."</td><td>".$row["deskripsi"]."</td><td>".$lihatJam.$detailRuangan."</td></tr>";
-                        $sql = "SELECT * FROM KetersediaanRuangan WHERE kode_ruangan=".$row["kode"]." ORDER BY jam_masuk asc";
+                        $sql = "SELECT * FROM KetersediaanRuangan WHERE kode_ruangan=".$row["kode"]." ORDER BY jam_mulai asc";
                         $result1 = $conn->query($sql);
                         if ($result1->num_rows > 0) {
                           $pilihanJam = "<tr><td>";
                           while($row1 = $result1->fetch_assoc()) {
                             if ($row1["status"] == 1) {
-                              $pilihanJam .= "<button class='btn btn-google'>".$row1["jam_masuk"]." - ".$row1["jam_keluar"]."</button>";
+                              $pilihanJam .= "<button class='btn btn-google'>".$row1["jam_mulai"]." - ".$row1["jam_selesai"]."</button>";
                             } else {
-                              $pilihanJam .= "<button class='btn btn-facebook'>".$row1["jam_masuk"]." - ".$row1["jam_keluar"]."</button>";
+                              $pilihanJam .= "<button class='btn btn-facebook'>".$row1["jam_mulai"]." - ".$row1["jam_selesai"]."</button>";
                             }
                           }
                           $pilihanJam .= "</td></tr>";

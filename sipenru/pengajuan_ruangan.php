@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SIPENRU</title>
+  <title>Daftar Pengajuan Belum Diproses</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -225,7 +225,72 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          <h1 class="h3 mb-4 text-gray-800">Daftar Pengajuan Belum Diproses</h1>
+
+          <!-- Table data ruangan -->
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nama Ruangan [Kode]</th>
+                    <th>Waktu Penggunaan</th>
+                    <th>Peminjam</th>
+                    <th>Tanggal Pengajuan</th>
+                    <th>Keterangan</th>
+                    <th>Proses</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nama Ruangan [Kode]</th>
+                    <th>Waktu Penggunaan</th>
+                    <th>Peminjam</th>
+                    <th>Tanggal Pengajuan</th>
+                    <th>Keterangan</th>
+                    <th>Proses</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <?php
+                  include 'db_connection.php';
+                  $conn = connectDB();
+
+                  $sql = "SELECT * FROM KetersediaanRuangan WHERE status=1";
+                  $resultKetersediaan = $conn->query($sql);
+
+                  if ($resultKetersediaan->num_rows > 0) {
+                    while($rowKetersediaan = $resultKetersediaan->fetch_assoc()) {
+                      $sql = "SELECT * FROM Ruangan WHERE kode='".$rowKetersediaan["kode_ruangan"]."'";
+                      $resultRuangan = $conn->query($sql);
+                      $rowRuangan = $resultRuangan->fetch_assoc();
+                      $ruangan = $rowRuangan["nama"]." [".$rowRuangan["kode"]."]";
+
+                      $sql = "SELECT * FROM PenggunaanRuangan WHERE id_ketersediaan='".$rowKetersediaan["id"]."'";
+                      $resultPenggunaan = $conn->query($sql);
+                      $rowPenggunaan = $resultPenggunaan->fetch_assoc();
+
+                      $sql = "SELECT * FROM User WHERE id='".$rowPenggunaan["id_user"]."'";
+                      $resultUser = $conn->query($sql);
+                      $rowUser = $resultUser->fetch_assoc();
+
+                      $waktu = $rowKetersediaan["tanggal"]." | ".$rowKetersediaan["jam_mulai"]."-".$rowKetersediaan["jam_selesai"];
+                      $status = $rowKetersediaan["status"] == 2 ? "OK" : "X";
+
+                      echo "<tr><td>".$rowKetersediaan["id"]."</td><td>".$ruangan."</td><td>".$waktu."</td><td>".$rowUser["nama"]."</td><td>".$rowPenggunaan["tanggal_pengajuan"]."</td><td>".$rowPenggunaan["keterangan"]."</td><td>".$status."</td></tr>";
+                    }
+                  } else {
+                    echo "<tr><td>- Tidak ada pengajuan terproses -</td></tr>";
+                  }
+
+                  closeDB($conn);
+                  ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
         </div>
         <!-- /.container-fluid -->

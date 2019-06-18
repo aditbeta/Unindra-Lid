@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SIPENRU</title>
+  <title>Ajukan Penggunaan Ruangan</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -225,7 +225,43 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          <h1 class="h3 mb-4 text-gray-800">Ajukan Penggunaan Ruangan</h1>
+
+          <!-- Table data ruangan -->
+          <?php
+            include 'db_connection.php';
+            $conn = connectDB();
+          ?>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="nama_ruangan">Nama Ruangan</label>
+                <select class="form-control" id="nama_ruangan" onchange="ruanganChange(this.value)">
+                  <?php
+                    $sql = "SELECT * FROM Ruangan";
+                    $result = $conn->query($sql);
+                    $pilihanRuangan = "";
+
+                    if ($result->num_rows > 0) {
+                      while($row = $result->fetch_assoc()) {
+                        $pilihanRuangan .= "<option value=".$row["kode"].">".$row["nama"]."</option>";
+                      }
+                    } else {
+                      $pilihanRuangan = "<option disabled>- Tidak ada pilihan ruangan tersedia -</option>";
+                    }
+                    echo $pilihanRuangan;
+                  ?>
+                </select>
+              </div>
+              <div class="form-group" id="divTanggal">
+              </div>
+              <div class="form-group" id="divJam">
+              </div>
+              <div class="form-group" id="divKeterangan">
+              </div>
+              <button type="submit" class="btn btn-primary" id="simpan" disabled>Simpan</button>
+            </form>
+          </div>
 
         </div>
         <!-- /.container-fluid -->
@@ -282,6 +318,36 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <script>
+    function ruanganChange(kode_ruangan) {
+      document.getElementById("divTanggal").innerHTML =
+        "<label for='tanggal'>Tanggal</label>" +
+        "<input class='form-control' type='date' name='tanggal' onchange='tanggalChange(this.value)'>"
+    }
+
+    function tanggalChange(tanggal) {
+      var e = document.getElementById("nama_ruangan");
+      var kode_ruangan = e.options[e.selectedIndex].value;
+      if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+      } else {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("divJam").innerHTML = this.responseText;
+          document.getElementById("simpan").disabled = false;
+        }
+      };
+      xmlhttp.open("GET","get_jam.php?kode_ruangan=" + kode_ruangan + "&tanggal=" + tanggal, true);
+      xmlhttp.send();
+
+      document.getElementById("divKeterangan").innerHTML =
+        "<label for='keterangan'>Keterangan</label>" +
+        "<input class='form-control' type='text' name='keterangan'>"
+    }
+  </script>
 
 </body>
 

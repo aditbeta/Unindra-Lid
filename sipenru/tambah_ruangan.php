@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Daftar Pengajuan Terproses</title>
+  <title>Input Ruangan Baru</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -225,71 +225,25 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Daftar Pengajuan Telah Diproses</h1>
+          <h1 class="h3 mb-4 text-gray-800">Input Ruangan</h1>
 
           <!-- Table data ruangan -->
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nama Ruangan [Kode]</th>
-                    <th>Waktu Penggunaan</th>
-                    <th>Peminjam</th>
-                    <th>Tanggal Pengajuan</th>
-                    <th>Keterangan</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nama Ruangan [Kode]</th>
-                    <th>Waktu Penggunaan</th>
-                    <th>Peminjam</th>
-                    <th>Tanggal Pengajuan</th>
-                    <th>Keterangan</th>
-                    <th>Status</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                  <?php
-                  include 'db_connection.php';
-                  $conn = connectDB();
-
-                  $sql = "SELECT * FROM KetersediaanRuangan WHERE status=2 OR status=3";
-                  $resultKetersediaan = $conn->query($sql);
-
-                  if ($resultKetersediaan->num_rows > 0) {
-                    while($rowKetersediaan = $resultKetersediaan->fetch_assoc()) {
-                      $sql = "SELECT * FROM Ruangan WHERE kode='".$rowKetersediaan["kode_ruangan"]."'";
-                      $resultRuangan = $conn->query($sql);
-                      $rowRuangan = $resultRuangan->fetch_assoc();
-                      $ruangan = $rowRuangan["nama"]." [".$rowRuangan["kode"]."]";
-
-                      $sql = "SELECT * FROM PenggunaanRuangan WHERE id_ketersediaan='".$rowKetersediaan["id"]."'";
-                      $resultPenggunaan = $conn->query($sql);
-                      $rowPenggunaan = $resultPenggunaan->fetch_assoc();
-
-                      $sql = "SELECT * FROM User WHERE id='".$rowPenggunaan["id_user"]."'";
-                      $resultUser = $conn->query($sql);
-                      $rowUser = $resultUser->fetch_assoc();
-
-                      $waktu = $rowKetersediaan["tanggal"]." | ".$rowKetersediaan["jam_mulai"]."-".$rowKetersediaan["jam_selesai"];
-                      $status = $rowKetersediaan["status"] == 2 ? "OK" : "X";
-
-                      echo "<tr><td>".$rowKetersediaan["id"]."</td><td>".$ruangan."</td><td>".$waktu."</td><td>".$rowUser["nama"]."</td><td>".$rowPenggunaan["tanggal_pengajuan"]."</td><td>".$rowPenggunaan["keterangan"]."</td><td>".$status."</td></tr>";
-                    }
-                  } else {
-                    echo "<tr><td>- Tidak ada pengajuan terproses -</td></tr>";
-                  }
-
-                  closeDB($conn);
-                  ?>
-                </tbody>
-              </table>
-            </div>
+            <form>
+              <div class="form-group">
+                <label for="nama_ruangan">Nama Ruangan</label>
+                <input class="form-control" type="text" name="nama_ruangan" id="nama_ruangan" required>
+              </div>
+              <div class="form-group">
+                <label for="kode_ruangan">Kode Ruangan</label>
+                <input class="form-control" type="text" name="kode_ruangan" id="kode_ruangan" required>
+              </div>
+              <div class="form-group">
+                <label for="deskripsi">Deskripsi</label>
+                <textarea class="form-control" name="deskripsi" id="deskripsi" rows="5" required></textarea>
+              </div>
+              <a class="btn btn-primary" onclick="simpanRuangan()">Simpan</a>
+            </form>
           </div>
 
         </div>
@@ -347,6 +301,23 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <script>
+    function simpanRuangan(){
+      var kode_ruangan = $("#kode_ruangan").val();
+      var nama_ruangan = $("#nama_ruangan").val();
+      var deskripsi = $("#deskripsi").val();
+      $.ajax({
+         type: "POST",
+         url: 'insert.php',
+         data:{ action:'ruangan', kode_ruangan: kode_ruangan, nama_ruangan: nama_ruangan, deskripsi: deskripsi },
+         success:function(data) {
+           alert("Berhasil menambahkan ruangan");
+           window.location.href = "detail_ruangan.php?id_ruangan=" + data;
+         }
+      });
+    }
+  </script>
 
 </body>
 

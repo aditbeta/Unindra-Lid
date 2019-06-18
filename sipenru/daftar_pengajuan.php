@@ -288,8 +288,7 @@
 
                             $pengajuan .= $row["id"]."</td><td>"
                             .$rowRuangan["kode"]."</td><td>"
-                            .$row["tanggal"]."</td><td>"
-                            .$rowKetersediaan["jam_masuk"]." - ".$rowKetersediaan["jam_keluar"]."</td><td>"
+                            .$rowKetersediaan["jam_mulai"]." - ".$rowKetersediaan["jam_selesai"]."</td><td>"
                             .$row["keterangan"]."</td><td>"
                             .$row["tanggal_pengajuan"]."</td><td>"
                             .$status;

@@ -1,14 +1,15 @@
-CREATE DATABASE IF NOT EXISTS pweb;
+CREATE DATABASE IF NOT EXISTS sipenru;
 
-USE pweb;
+USE sipenru;
 
+-- role: 0 = admin, 1 = staff, 2 = mahasiswa
 CREATE TABLE IF NOT EXISTS User (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	username VARCHAR(20) NOT NULL,
 	password VARCHAR(20) NOT NULL,
 	email VARCHAR(20),
-	fullname VARCHAR(40),
-	no_telpon VARCHAR(20),
+	nama VARCHAR(40),
+	no_handphone VARCHAR(20),
 	bagian VARCHAR(20),
 	role INT(20),
 	PRIMARY KEY (id)
@@ -24,11 +25,13 @@ CREATE TABLE IF NOT EXISTS Ruangan (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+-- status: 0 = tersedia; 1 = diajukan; 2 = diterima; 3 = ditolak
 CREATE TABLE IF NOT EXISTS KetersediaanRuangan (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	kode_ruangan VARCHAR(20) NOT NULL,
-	jam_masuk TIME NOT NULL,
-	jam_keluar TIME NOT NULL,
+	tanggal DATE NOT NULL,
+	jam_mulai TIME NOT NULL,
+	jam_selesai TIME NOT NULL,
 	status INT(20),
 	PRIMARY KEY (id),
 	FOREIGN KEY (kode_ruangan) REFERENCES Ruangan(kode) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -39,7 +42,6 @@ CREATE TABLE IF NOT EXISTS PenggunaanRuangan (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	id_ketersediaan INT(20) UNSIGNED NOT NULL,
 	id_user INT(20) UNSIGNED NOT NULL,
-	tanggal DATE NOT NULL,
 	tanggal_pengajuan DATETIME NOT NULL,
 	keterangan VARCHAR(144),
 	PRIMARY KEY (id),
