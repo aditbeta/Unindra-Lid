@@ -34,8 +34,8 @@
 
   <script>
     $(window).on('load', function(){
-      var user_id = "<?php echo $_SESSION['user_id'] ?>";
-      if (user_id > 0) {
+      var user_role = "<?php echo $_SESSION['user_role'] ?>";
+      if (user_role > 0) {
         $(".admin-item").hide();
       }
       $("#simpan").hide();

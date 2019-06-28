@@ -71,15 +71,15 @@
                             $resultRuangan = $conn->query($sql);
                             $rowRuangan = $resultRuangan->fetch_assoc();
 
-                            switch ($rowKetersediaan["status"]) {
-                              case 2:
-                                $status = "<button class='btn btn-success' disabled>Disetujui</button>";
+                            switch ($row["status"]) {
+                              case 1:
+                                $status = "<button class='btn btn-success' style='width:100%;' disabled>Disetujui</button>";
                                 break;
-                              case 3:
-                                $status = "<button class='btn btn-danger' disabled>Ditolak</button>";
+                              case 2:
+                                $status = "<button class='btn btn-danger' style='width:100%;' disabled>Ditolak</button>";
                                 break;
                               default:
-                                $status = "<button class='btn btn-warning disabled'>Diajukan</button>";
+                                $status = "<button class='btn btn-warning' style='width:100%;' disabled>Diajukan</button>";
                                 break;
                             }
 
@@ -94,11 +94,11 @@
                           $pengajuan .= "</td></tr>";
                           echo $pengajuan;
                         } else {
-                          echo "<tr><td colspan='5' align='center'>- Tidak ada pengajuan penggunaan ruangan -</td></tr>";
+                          echo "<tr><td colspan='7' align='center'>- Tidak ada pengajuan penggunaan ruangan -</td></tr>";
                         }
                       }
                   } else {
-                      echo "<tr><td>- Tidak ada pengajuan penggunaan ruangan -</td></tr>";
+                      echo "<tr><td colspan='7' align='center'>- Tidak ada pengajuan penggunaan ruangan -</td></tr>";
                   }
 
                   closeDB($conn);

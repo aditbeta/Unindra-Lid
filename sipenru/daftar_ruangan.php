@@ -62,6 +62,10 @@
                         echo "<tr><td>".$row["id"]."</td><td>".$row["kode"]."</td><td>".$row["nama"]."</td><td>".$row["deskripsi"]."</td><td>".$lihatJam." ".$detailRuangan."</td></tr>";
                         $sql = "SELECT * FROM KetersediaanRuangan WHERE kode_ruangan=".$row["kode"]." ORDER BY jam_mulai asc";
                         $result1 = $conn->query($sql);
+                        if (!$result1) {
+                            trigger_error('Invalid query: ' . $conn->error);
+                        }
+                        // echo "<script type='text/javascript'>alert('$result1');</script>";
                         if ($result1->num_rows > 0) {
                           $pilihanJam = "<tr class='trJam jam".$row["id"]."'><td colspan='5'>";
                           while($row1 = $result1->fetch_assoc()) {
@@ -79,7 +83,7 @@
                         }
                       }
                   } else {
-                      echo "<tr><td>- Tidak ada ruangan tersedia -</td></tr>";
+                      echo "<tr><td colspan='5' align='center'>- Tidak ada ruangan tersedia -</td></tr>";
                   }
 
                   closeDB($conn);

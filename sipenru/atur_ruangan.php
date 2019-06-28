@@ -87,7 +87,7 @@
                         }
                       }
                   } else {
-                      echo "<tr><td>- Tidak ada ruangan tersedia -</td></tr>";
+                      echo "<tr><td colspan='5' align='center'>- Tidak ada ruangan tersedia -</td></tr>";
                   }
 
                   closeDB($conn);

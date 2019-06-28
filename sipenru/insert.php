@@ -17,6 +17,7 @@
         $sql = "INSERT INTO Ruangan (kode, nama, deskripsi) VALUES ('".$kode."', '".$nama."', '".$deskripsi."');";
 
         if ($conn->multi_query($sql) === TRUE) {
+            // Mengembalikan id terakhir yg diinput
             echo mysqli_insert_id($conn);
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
@@ -89,11 +90,9 @@
         }
     }
 
-
     include 'db_connection.php';
     $conn = connectDB();
 
-    // $operasi = $_POST['operasi'];
     switch ($_POST['action']) {
         case 'user':
             tambahUser($conn);
@@ -114,6 +113,10 @@
         case 'proses':
             prosesPengajuan($conn);
             break;
+        
+        // case 'register':
+        //     register($conn);
+        //     break;
         
         default:
             # code...

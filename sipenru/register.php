@@ -31,7 +31,7 @@
           <div class="card-body">
             <!-- <h5 class="card-title text-center">Sign In</h5> -->
             <h5 class="card-title text-center">SIPENRU v1.0 <br> SISTEM PENGGUNAAN RUANGAN</h5>
-            <form class="form-signin" method="post" action="login.php">
+            <form action="login.php">
               <div class="form-label-group">
                 <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
                 <label for="username">Username</label>
@@ -48,6 +48,10 @@
               </div>
               <button class='btn btn-primary btn-user btn-block text-uppercase' id="simpan" onclick="login()">Masuk</button>
             </form>
+              <hr>
+              <div class="text-center">
+                <a class="small" href="register.php">Belum punya akun SIPENRU? Buat akun disini!</a>
+              </div>
           </div>
         </div>
       </div>
@@ -55,7 +59,9 @@
   </div>
 
   <script>
-    function login() {
+    function login(){
+      // var parameter = document.getElementById("username").value;
+      // parameter += "," + document.getElementById("password").value;
       var username = document.getElementById("username").value;
       var password = document.getElementById("password").value;
       $.ajax({
@@ -63,8 +69,21 @@
          url: 'login.php',
          data:{ username: username, password: password },
          success:function(data) {
-           alert(data);
+           // alert(data);
+           alert("Berhasil menambahkan ketersediaan ruangan");
            window.location.href = "daftar_ruangan.php";
+         }
+      });
+    }
+
+    function register(){
+      var parameter = document.getElementById("username").value;
+      parameter += "," + document.getElementById("password").value;
+      $.ajax({
+         type: "POST",
+         url: 'insert.php',
+         data:{ action: "ruangan", parameter: parameter },
+         success:function(data) {
          }
       });
     }

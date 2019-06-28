@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS sipenru;
 
 USE sipenru;
 
--- role: 0 = admin, 1 = staff, 2 = mahasiswa
+-- role: 0 = admin, 1 = non-admin
 CREATE TABLE IF NOT EXISTS User (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	username VARCHAR(20) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS KetersediaanRuangan (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- status: 0 = menunggu; 1 = diterima, 2 = ditolak
+-- status: 0 = diajukan; 1 = diterima, 2 = ditolak
 CREATE TABLE IF NOT EXISTS PenggunaanRuangan (
 	id INT(20) UNSIGNED AUTO_INCREMENT,
 	id_ketersediaan INT(20) UNSIGNED NOT NULL,

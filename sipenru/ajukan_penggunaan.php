@@ -83,12 +83,14 @@
       var kode_ruangan = url.searchParams.get("kode");
       var tanggal = url.searchParams.get("tanggal");
       var jam_mulai = url.searchParams.get("mulai");
-      if (jam_mulai != null || jam_mulai != "") {
+      if (jam_mulai != null) {
         ruanganChange(kode_ruangan);
         tanggalChange(tanggal);
-        $("#tanggal").val(tanggal);
+        $("#nama_ruangan").val(nama_ruangan);
         $("#nama_ruangan").prop('disabled', true);
+        $("#tanggal").val(tanggal);
         $("#tanggal").prop('disabled', true);
+        // $("#jam").val(jam_mulai);
         $("#jam").prop('disabled', true);
         $("#simpan").show();
       }

@@ -40,8 +40,8 @@
                     <th>Waktu Penggunaan</th>
                     <th>Peminjam</th>
                     <th>Tanggal Pengajuan</th>
-                    <th>Keterangan</th>
-                    <th>Proses</th>
+                    <th width="20%">Keterangan</th>
+                    <th width="25%">Proses</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -51,8 +51,8 @@
                     <th>Waktu Penggunaan</th>
                     <th>Peminjam</th>
                     <th>Tanggal Pengajuan</th>
-                    <th width="20%">Keterangan</th>
-                    <th width="20%">Proses</th>
+                    <th>Keterangan</th>
+                    <th>Proses</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -89,7 +89,7 @@
                       echo "<tr><td>".$rowKetersediaan["id"]."</td><td>".$ruangan."</td><td>".$waktu."</td><td>".$rowUser["nama"]."</td><td>".$rowPenggunaan["tanggal_pengajuan"]."</td><td>".$rowPenggunaan["keterangan"]."</td><td>".$tolakPengajuan." ".$terimaPengajuan."</td></tr>";
                     }
                   } else {
-                    echo "<tr><td>- Tidak ada pengajuan terproses -</td></tr>";
+                    echo "<tr><td colspan='7' align='center'>- Tidak ada pengajuan baru -</td></tr>";
                   }
 
                   closeDB($conn);
